@@ -8,7 +8,7 @@ import { FeatureItem } from "../components/Feature-item";
 
 export const Home = () => {
     return(
-        <React.Fragment>
+        <main className='main'>
             <div className="hero">
                 <section className="hero-content">
                     <h2 className="sr-only">Promoted Content</h2>
@@ -39,6 +39,6 @@ export const Home = () => {
                     is always safe." />
                     
             </section>
-        </React.Fragment>
+        </main>
     );
 }
