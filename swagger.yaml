@@ -1,0 +1,224 @@
+swagger: '2.0'
+info:
+  title: Bank Argent API documentation
+  description: Contient tous les points d'accès à l'API disponibles
+  version: '1.0.0'
+  termsOfService: 'http://swagger.io/terms/'
+host: localhost:3001
+basePath: /api/v1
+schemes:
+  - http
+  - https
+paths:
+  /user/transaction/month:
+    get:
+      tags:
+        - Transaction Module
+      summary: Affiche les transaction du mois en cours
+      description: Affiche les transaction du mois en cours
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Retourne les transactions du mois
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TransactionResult'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/transaction/{id}:
+    get:
+      tags:
+        - Transaction Module
+      summary: Affiche une transaction en fonction via ID
+      description: Afficher une transaction
+      parameters:
+        - in: path
+          name: id
+          description: 'ID de la transaction'
+          required: true
+          type: integer
+          format: int64
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Renvoie la transaction
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TransactionResult'
+        '404':
+          description: Not found
+        '500':
+          description: Internal Server Error
+  /user/transaction/add:
+    post:
+      tags:
+        - Transaction Module
+      summary: Ajouter une transaction
+      description: Ajouter une transaction
+      parameters:
+        - in: body
+          name: body
+          description: 'Data de la transaction'
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionPostAdd'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Renvoie une confirmation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TransactionResultAdd'
+        '400':
+          description: Invalid Fields
+        '500':
+          description: Internal Server Error
+  /user/transaction/update:
+    put:
+      tags:
+        - Transaction Module
+      summary: Mettre à jour une transaction
+      description: Mettre à jour une transaction
+      parameters:
+        - in: body
+          name: id
+          description: 'ID de la transaction'
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionPostUpdate'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Renvoie une confirmation
+          schema:
+            $ref: '#/definitions/TransactionResultUpdate'
+        '400':
+          description: Invalid Fields
+        '404':
+          description: Not found
+        '500':
+          description: Internal Server Error
+  /user/transaction/delete:
+    delete:
+      tags:
+        - Transaction Module
+      summary: Supprimer une transaction
+      description: Supprimer une transaction
+      parameters:
+        - in: body
+          name: id
+          description: 'ID de la transaction'
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionPostDelete'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Renvoie une confirmation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TransactionResultDelete'
+        '404':
+          description: Not found
+        '500':
+          description: Internal Server Error
+
+
+definitions:
+# Delete Transaction
+  TransactionResultDelete:
+    properties:
+      result:
+        type: boolean
+
+  TransactionPostDelete:
+    properties:
+      id:
+        type: integer
+
+
+# Add Transaction
+  TransactionResultAdd:
+    properties:
+      result:
+        type: boolean
+
+  TransactionPostAdd:
+    properties:
+        id:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        description:
+          type: string
+        amount:
+          type: number
+          format: float
+        balance:
+          type: number
+          format: float
+        transaction: 
+          type: string
+        category:
+          type: string
+        notes: 
+          type: number
+          x-nullable : true
+
+
+# Show Transaction
+  TransactionResult:
+    properties:
+      id:
+        type: integer
+      createdAt:
+        type: string
+        format: date-time
+      description:
+        type: string
+      amount:
+        type: number
+        format: float
+      balance:
+        type: number
+        format: float
+      transaction: 
+        type: string
+      category:
+        type: string
+      notes: 
+        type: number
+        x-nullable : true
+
+  TransactionPostID:
+    properties:
+      id:
+        type: integer
+
+# Update Transaction
+  TransactionPostUpdate:
+      properties:
+        id:
+          type: integer
+        category:
+          type: string
+        notes: 
+          type: number
+          x-nullable : true
+
+  TransactionResultUpdate:
+    properties:
+      result:
+        type: boolean

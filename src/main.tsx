@@ -1,15 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+
+import { Provider } from "react-redux";
 import { BrowserRouter } from 'react-router-dom'
 import { Footer } from './adapters/components/Footer'
 import { Header } from './adapters/components/Header'
 import { RouterApp } from './corelogic/RouterApp'
+
 import './App.scss'
 
 import { initReduxStore } from './corelogic/store/reduxStore'
 import { LoginGateway } from './corelogic/gateways/login'
 
-const store = initReduxStore({LoginGateway});
+const store = initReduxStore();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
